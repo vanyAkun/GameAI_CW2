@@ -33,6 +33,7 @@ public class KMeansClustering : MonoBehaviour
     private int currentIteration = 0;
     private Dictionary<int, List<Vector2>> clusters;
     [SerializeField] private Color[] clusterColors;
+    [SerializeField] private float scaleFactor = 3.0f;
 
     private void Start()
     {
@@ -133,7 +134,8 @@ public class KMeansClustering : MonoBehaviour
         {
             foreach (var point in cluster.Value)
             {
-                GameObject enemy = Instantiate(enemyPrefab, new Vector3(point.x, 0, point.y), Quaternion.identity, transform);
+                Vector3 scaledPoint = new Vector3(point.x * scaleFactor, 0, point.y * scaleFactor);
+                GameObject enemy = Instantiate(enemyPrefab, scaledPoint, Quaternion.identity, transform);
                 var renderer = enemy.GetComponent<Renderer>();
                 if (renderer != null)
                 {
@@ -151,7 +153,8 @@ public class KMeansClustering : MonoBehaviour
     {
         for (int i = 0; i < centroids.Count; i++)
         {
-            GameObject centroidGO = Instantiate(centroidPrefab, new Vector3(centroids[i].x, 0, centroids[i].y), Quaternion.identity, transform);
+            Vector3 scaledCentroid = new Vector3(centroids[i].x * scaleFactor, 0, centroids[i].y * scaleFactor);
+            GameObject centroidGO = Instantiate(centroidPrefab, scaledCentroid, Quaternion.identity, transform);
             var renderer = centroidGO.GetComponent<Renderer>();
             if (renderer != null)
             {
