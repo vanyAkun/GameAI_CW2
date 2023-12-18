@@ -60,7 +60,26 @@ public class KMeans : MonoBehaviour
     // Iterate the algorithm.
     public void Cluster()
     {
-        // Your code here.
+        // 1. Initialize clusters
+        InitialiseClusters();
+
+        // 2. Assign points to clusters
+        AddPointsToClusters();
+
+        // 3. Check for and handle empty clusters
+        CheckForEmptyClusters();
+
+        // 4. Calculate new centroids for each cluster
+        CalculateNewCentroids();
+
+        // 5. Set colors to the points in each cluster
+        SetColorToClusterPoints();
+
+        // 6. Update the positions of previous centroids for the next iteration
+        UpdatePreviousCentroids();
+
+        // 7. Check if centroids have changed their position (convergence check)
+        CheckForConvergence();
     }
 
     // Destroys all point and centroid GameObjects and disables "Done" message.
