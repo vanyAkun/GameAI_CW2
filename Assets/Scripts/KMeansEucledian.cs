@@ -46,7 +46,7 @@ public class KMeansClustering : MonoBehaviour
         InitializeCentroids();
         VisualizeCentroids();
     }
-    public void PerformOneIteration()
+    public void Iteration()
     {
         if (currentIteration < 3)
         {
@@ -66,26 +66,9 @@ public class KMeansClustering : MonoBehaviour
     }
     private void InitializeCentroids()
     {
-        // Initialization of centroids to the first 'numberOfClusters' points
         for (int i = 0; i < numberOfClusters; i++)
         {
             centroids.Add(dataSet[i]);
-        }
-    }
-
-    private IEnumerator PerformKMeansClustering()
-    {
-        while (currentIteration < 3)
-        {
-            clusters = AssignPointsToClusters();
-            UpdateCentroids();
-
-            
-            VisualizeClusters();
-            VisualizeCentroids();
-
-            currentIteration++;
-            yield return new WaitForSeconds(1f);
         }
     }
 

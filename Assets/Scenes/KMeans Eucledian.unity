@@ -710,7 +710,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1885168795}
         m_TargetAssemblyTypeName: KMeansClustering, Assembly-CSharp
-        m_MethodName: PerformOneIteration
+        m_MethodName: Iteration
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

@@ -46,7 +46,7 @@ public class KMeansManhattan : MonoBehaviour
         InitializeCentroids();
         VisualizeCentroids();
     }
-    public void PerformOneIteration()
+    public void Iteration()
     {
         if (currentIteration < 3)
         {
@@ -73,21 +73,6 @@ public class KMeansManhattan : MonoBehaviour
         }
     }
 
-    private IEnumerator PerformKMeansClustering()
-    {
-        while (currentIteration < 3)
-        {
-            clusters = AssignPointsToClusters();
-            UpdateCentroids();
-
-            
-            VisualizeClusters();
-            VisualizeCentroids();
-
-            currentIteration++;
-            yield return new WaitForSeconds(1f);
-        }
-    }
     private Dictionary<int, List<Vector2>> AssignPointsToClusters()
     {
         var newClusters = new Dictionary<int, List<Vector2>>();
