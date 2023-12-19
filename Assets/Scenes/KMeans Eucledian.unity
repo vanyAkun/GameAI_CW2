@@ -978,7 +978,7 @@ MonoBehaviour:
     type: 3}
   numberOfClusters: 3
   clusterColors:
-  - {r: 1, g: 0, b: 0, a: 0}
+  - {r: 1, g: 0.009412543, b: 0, a: 0}
   - {r: 0.17626214, g: 1, b: 0, a: 0}
   - {r: 0, g: 0.77597976, b: 1, a: 0}
   scaleFactor: 3

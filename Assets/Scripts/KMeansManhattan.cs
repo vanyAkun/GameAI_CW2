@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class KMeansClustering : MonoBehaviour
+public class KMeansManhattan : MonoBehaviour
 {
     // This is your data set that you'll need to input manually.
     private Vector2[] dataSet = new Vector2[]
@@ -88,7 +88,6 @@ public class KMeansClustering : MonoBehaviour
             yield return new WaitForSeconds(1f);
         }
     }
-
     private Dictionary<int, List<Vector2>> AssignPointsToClusters()
     {
         var newClusters = new Dictionary<int, List<Vector2>>();
@@ -99,7 +98,7 @@ public class KMeansClustering : MonoBehaviour
             newClusters.Add(i, new List<Vector2>());
         }
 
-        // Assign each point to the nearest centroid using Euclidean distance
+        // Assign each point to the nearest centroid using Manhattan distance
         foreach (var point in dataSet)
         {
             float minDistance = float.MaxValue;
@@ -107,7 +106,7 @@ public class KMeansClustering : MonoBehaviour
 
             for (int i = 0; i < centroids.Count; i++)
             {
-                float distance = EuclideanDistance(point, centroids[i]);
+                float distance = ManhattanDistance(point, centroids[i]);
 
                 if (distance < minDistance)
                 {
@@ -173,15 +172,9 @@ public class KMeansClustering : MonoBehaviour
             }
         }
     }
-
-
-    private float EuclideanDistance(Vector2 a, Vector2 b)
+    private float ManhattanDistance(Vector2 a, Vector2 b)
     {
-        return Vector2.Distance(a, b);
+        return Mathf.Abs(a.x - b.x) + Mathf.Abs(a.y - b.y);
     }
 
-    //    private float ManhattanDistance(Vector2 a, Vector2 b)
-    //    {
-    //        return Mathf.Abs(a.x - b.x) + Mathf.Abs(a.y - b.y);
-    //    }
 }
