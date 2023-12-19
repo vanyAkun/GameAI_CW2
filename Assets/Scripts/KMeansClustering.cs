@@ -27,7 +27,7 @@ public class KMeansClustering : MonoBehaviour
     [SerializeField] private GameObject enemyPrefab;
     [SerializeField] private GameObject centroidPrefab;
     [SerializeField] private int numberOfClusters = 3;
-    [SerializeField] private bool useManhattanDistance = false;
+    //[SerializeField] private bool useManhattanDistance = false;
 
     private List<Vector2> centroids = new List<Vector2>();
     private int currentIteration = 0;
@@ -39,17 +39,34 @@ public class KMeansClustering : MonoBehaviour
     {
         if (clusterColors.Length < numberOfClusters)
         {
-            Debug.LogError("Not enough colors provided for the number of clusters!");
+            Debug.LogError("Not enough colours");
             return;
         }
 
         InitializeCentroids();
-        StartCoroutine(PerformKMeansClustering());
+        VisualizeCentroids();
     }
+    public void PerformOneIteration()
+    {
+        if (currentIteration < 3)
+        {
+            clusters = AssignPointsToClusters();
+            UpdateCentroids();
 
+            
+            VisualizeClusters();
+            VisualizeCentroids();
+
+            currentIteration++;
+        }
+        else
+        {
+            Debug.Log("Max iterations reached");
+        }
+    }
     private void InitializeCentroids()
     {
-        // Simple initialization of centroids to the first 'numberOfClusters' points
+        // Initialization of centroids to the first 'numberOfClusters' points
         for (int i = 0; i < numberOfClusters; i++)
         {
             centroids.Add(dataSet[i]);
@@ -63,12 +80,12 @@ public class KMeansClustering : MonoBehaviour
             clusters = AssignPointsToClusters();
             UpdateCentroids();
 
-            // Visualization in Unity
+            
             VisualizeClusters();
             VisualizeCentroids();
 
             currentIteration++;
-            yield return new WaitForSeconds(1f); // Delay to visualize the steps
+            yield return new WaitForSeconds(1f);
         }
     }
 
@@ -76,13 +93,13 @@ public class KMeansClustering : MonoBehaviour
     {
         var newClusters = new Dictionary<int, List<Vector2>>();
 
-        // Initialize clusters
+        // Initialize clusters with empty lists
         for (int i = 0; i < numberOfClusters; i++)
         {
-            newClusters[i] = new List<Vector2>();
+            newClusters.Add(i, new List<Vector2>());
         }
 
-        // Assign each point to the nearest centroid
+        // Assign each point to the nearest centroid using Euclidean distance
         foreach (var point in dataSet)
         {
             float minDistance = float.MaxValue;
@@ -90,9 +107,7 @@ public class KMeansClustering : MonoBehaviour
 
             for (int i = 0; i < centroids.Count; i++)
             {
-                float distance = useManhattanDistance
-                    ? ManhattanDistance(point, centroids[i])
-                    : EuclideanDistance(point, centroids[i]);
+                float distance = EuclideanDistance(point, centroids[i]);
 
                 if (distance < minDistance)
                 {
@@ -106,7 +121,6 @@ public class KMeansClustering : MonoBehaviour
 
         return newClusters;
     }
-
     private void UpdateCentroids()
     {
         for (int i = 0; i < numberOfClusters; i++)
@@ -146,9 +160,6 @@ public class KMeansClustering : MonoBehaviour
         }
     }
 
-    
-
-
     private void VisualizeCentroids()
     {
         for (int i = 0; i < centroids.Count; i++)
@@ -169,8 +180,8 @@ public class KMeansClustering : MonoBehaviour
         return Vector2.Distance(a, b);
     }
 
-    private float ManhattanDistance(Vector2 a, Vector2 b)
-    {
-        return Mathf.Abs(a.x - b.x) + Mathf.Abs(a.y - b.y);
-    }
+    //    private float ManhattanDistance(Vector2 a, Vector2 b)
+    //    {
+    //        return Mathf.Abs(a.x - b.x) + Mathf.Abs(a.y - b.y);
+    //    }
 }
