@@ -101,6 +101,7 @@ public class KMeansManhattan : MonoBehaviour
             }
 
             newClusters[closestCentroidIndex].Add(point);
+            Debug.Log($"Iteration {currentIteration}, Point {point} assigned to Centroid {closestCentroidIndex} with Distance {minDistance}");
         }
 
         return newClusters;

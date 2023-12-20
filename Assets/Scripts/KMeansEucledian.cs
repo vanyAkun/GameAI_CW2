@@ -100,6 +100,9 @@ public class KMeansClustering : MonoBehaviour
             }
 
             newClusters[closestCentroidIndex].Add(point);
+
+            // Debugging: Log the distance of the point from its nearest centroid
+            Debug.Log($"Iteration {currentIteration}, Point {point} assigned to Centroid {closestCentroidIndex} with Distance {minDistance}");
         }
 
         return newClusters;
@@ -158,9 +161,9 @@ public class KMeansClustering : MonoBehaviour
     }
 
 
-    private float EuclideanDistance(Vector2 a, Vector2 b)
+    private float EuclideanDistance(Vector2 x, Vector2 y)
     {
-        return Vector2.Distance(a, b);
+        return Vector2.Distance(x, y);
     }
 
 
